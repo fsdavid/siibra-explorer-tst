@@ -2,31 +2,28 @@
 
 ## Selecting a template / atlas
 
-The interactive atlas viewer supports a number of atlases.
+The *siibra-explorer* supports a number of atlases.
 
 ### From homepage
 
-On the home page, the atlases are categorised under their respective template spaces.
+Clicking on the respective atlas species will lead to the atlas of the selected species.
 
-[![](images/home.png)](images/home.png)
+[![](images/siibra_landing-page.jpg)](images/siibra_landing-page.jpg)
 
-Select any of the parcellations listed, the interactive atlas viewer will load the parcellation in the corresponding template space.
 
-Clicking on the template card will load the template and the first of the listed parcellation under the template space.
 
 ### From viewer
 
-If an atlas is already loaded, the list of available templates and parcellations can be accessed from the side bar.
+Once you select an atlas, the list of available templates and parcellations can be accessed from the layer selector (blue button at the bottom left).
 
-[![](images/bigbrain_parcellation_selector_open.png)](images/bigbrain_parcellation_selector_open.png)
+[![](images/selection-layer.jpg)](images/selection-layer.jpg)
 
 ### Information on the selected template / parcellation
 
-Information on the selected template or parcellation can be revealed by `hovering` or `tapping` the `info` button
+Information on the selected template or parcellation can be revealed by `clicking` the `info` button.
 
-[![](images/bigbrain_info_btn.png)](images/bigbrain_info_btn.png)
+[![](images/info-i.jpg)](images/info-i.jpg)
 
-[![](images/bigbrain_moreinfo.png)](images/bigbrain_moreinfo.png)
 
 ## Browsing regions
 
