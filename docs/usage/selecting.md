@@ -31,7 +31,7 @@ There exist several ways of selecting and browsing the parcellated regions in a 
 
 ### Directly from the parcellation map
 
-Each of the regions is represented as a coloured segment in _slice views_ (and in most circumstances, in _3d view_ as well). Click on the segment to select the brain region.
+Each of the regions is represented as a coloured segment in _slice views_ (and in most circumstances, in _3D view_ as well). Click on the segment to select the brain region.
 
 [![](images/BigBrain_hoc1.png)](images/BigBrain_hoc1.png)
 
@@ -39,7 +39,7 @@ Each of the regions is represented as a coloured segment in _slice views_ (and i
 
 Search for regions of interest by using the region search box.
 
-[![](images/BigBrain_hpo1.png)](images/BigBrain_hpo1.png)
+[![](images/BigBrain_hoc1_quicksearch.png)](images/BigBrain_hoc1_quicksearch.png)
 
 
 
@@ -47,22 +47,20 @@ Search for regions of interest by using the region search box.
 
 To view the full hierarchy of region names and relationships between brain regions, `click` the taxonomy button. 
 
-[![](images/taxonomy-view.png)](images/taxonomy-view.png)
+[![](images/BigBrain_hoc1_taxonomy.png)](images/BigBrain_hoc1_taxonomy.png)
 
 
 
 ### Explore the region in other reference templates
-If the parcellation region is available in multiple reference spaces, it is possible to explore them directly from the region context menu.
+If the parcellation region is available in multiple reference spaces, it is possible to explore them directly from the left quick search menu.
 
-Click on a parcellation region (coloured segment) to reveal the region context menu. If the region is available in multiple reference spaces, a `Change template` button will appear. Click on `Change template` button to expand available templates.
+Select a region as described above and open `Explore in other templates` in the left quick search menu. If the region is available in multiple reference spaces, they are displayed here. Then, choose the reference space in which you want to explore the region.
 
-[![](images/selecting_change_template_from_region.png)](images/selecting_change_template_from_region.png)
+[![](images/hoc1_other-templates.png)](images/hoc1-other-templates.png)
 
-In the popout menu, you can jump directly to the region in a different reference template by clicking the corresponding option.
+More information about the selected regions of interest can be retrieved and displayed using the quick search menu, such as descriptions and semantically linked datasets. More detailed information is available in [Searching](search.md).
 
 ## Selecting / Deselecting region(s)
-
-Region(s) of interest may also be selected, which will [fetch and display](search.md) additional information, such as descriptions and semantically linked datasets, about the region(s).
 
 ### From the viewer
 
