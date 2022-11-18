@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Inject
 import { select, Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { ClickInterceptor, CLICK_INTERCEPTOR_INJECTOR } from "src/util";
-import { distinctUntilChanged, startWith } from "rxjs/operators";
+import { distinctUntilChanged, map, startWith } from "rxjs/operators";
 import { ARIA_LABELS } from 'common/constants'
 import { EnumViewerEvt, IViewer, TViewerEvent } from "../../viewer.interface";
 import { NehubaViewerContainerDirective, TMouseoverEvent } from "../nehubaViewerInterface/nehubaViewerInterface.directive";
@@ -21,6 +21,8 @@ import { NehubaConfig, getParcNgId, getRegionLabelIndex } from "../config.servic
 import { SET_MESHES_TO_LOAD } from "../constants";
 import { annotation, atlasAppearance, atlasSelection, userInteraction } from "src/state";
 import { linearTransform, TVALID_LINEAR_XFORM_DST, TVALID_LINEAR_XFORM_SRC } from "src/atlasComponents/sapi/core/space/interspaceLinearXform";
+import { arrayEqual } from "src/util/array";
+import { NgLayerCustomLayer } from "src/state/atlasAppearance";
 
 export const INVALID_FILE_INPUT = `Exactly one (1) nifti file is required!`
 
@@ -163,6 +165,21 @@ export class NehubaGlueCmp implements IViewer<'nehuba'>, OnDestroy, AfterViewIni
 
   ngAfterViewInit(): void {
     this.setupNehubaEvRelay()
+
+    const customLayer = this.store$.pipe(
+      select(atlasAppearance.selectors.customLayers),
+      distinctUntilChanged(arrayEqual((o, n) => o.id === n.id)),
+      map(cl => {
+        const customLayers = cl.filter(l => l.clType === "customlayer/nglayer" && l.controllable)
+        return customLayers
+      }),
+      distinctUntilChanged(),
+    ).subscribe((l: NgLayerCustomLayer[]) => {
+      if (l && l.length === 1) {
+        this.openLayerController({layerName: l[0].id, fileName: l[0].source.split(',').pop()})
+      }
+    })
+    this.onDestroyCb.push(() => customLayer.unsubscribe())
   }
 
   ngOnDestroy(): void {
@@ -362,34 +379,11 @@ export class NehubaGlueCmp implements IViewer<'nehuba'>, OnDestroy, AfterViewIni
               lowThreshold: meta.min || 0,
               highThreshold: meta.max || 1
             }),
-            clType: 'customlayer/nglayer'
+            clType: 'customlayer/nglayer',
+            controllable: true,
+            isLocal: true
           }
         })
-      )
-      this.dialog.open(
-        this.layerCtrlTmpl,
-        {
-          data: {
-            layerName: randomUuid,
-            filename: file.name,
-            moreInfoFlag: false,
-            min: meta.min || 0,
-            max: meta.max || 1,
-            warning: meta.warning || []
-          },
-          hasBackdrop: false,
-          disableClose: true,
-          position: {
-            top: '0em'
-          },
-          autoFocus: false,
-          panelClass: [
-            'no-padding-dialog',
-            'w-100'
-          ]
-        }
-      ).afterClosed().subscribe(
-        () => this.dismissAllAddedLayers()
       )
     } catch (e) {
       console.error(e)
@@ -398,4 +392,33 @@ export class NehubaGlueCmp implements IViewer<'nehuba'>, OnDestroy, AfterViewIni
       })
     }
   }
+
+  openLayerController(meta: {layerName: string, fileName: string, min?: number, max?: number, warning?: any[]}) {
+    this.dialog.open(
+      this.layerCtrlTmpl,
+      {
+        data: {
+          layerName: meta.layerName,
+          filename: meta.fileName,
+          moreInfoFlag: false,
+          min: meta.min || 0,
+          max: meta.max || 1,
+          warning: meta.warning || []
+        },
+        hasBackdrop: false,
+        disableClose: true,
+        position: {
+          top: '0em'
+        },
+        autoFocus: false,
+        panelClass: [
+          'no-padding-dialog',
+          'w-100'
+        ]
+      }
+    ).afterClosed().subscribe(
+      () => this.dismissAllAddedLayers()
+    )
+  }
+
 }
