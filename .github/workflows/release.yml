@@ -1,13 +1,9 @@
 name: Release
 on:
-  push: 
-    branches:
-      - master
-  
   workflow_dispatch:
     inputs:
-      first:
-        default: ''
+      url:
+        required: false
       
 
 jobs:
