@@ -1,6 +1,21 @@
 name: Main
 on: workflow_dispatch
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_API_ROOT: https://api.github.com/repos/fsdavid/siibra-explorer-tst
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ 1111 }}
+        release_name: Release ${{ 1111 }}
+        draft: false
+        prerelease: false
     - name: Zip build files
       run: zip -r build-files.zip common
     - name: Upload Release Asset
@@ -13,3 +28,4 @@ jobs:
         asset_path: ./build-files.zip
         asset_name: build-files.zip
         asset_content_type: application/zip
+
